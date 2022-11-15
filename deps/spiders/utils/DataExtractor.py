@@ -27,10 +27,6 @@ class DataExtractor:
         plenary_presences = self.__extract_presence_info(plenary_xpath_id)
         commissions_presences = self.__extract_presence_info(commission_xpath_id)
 
-        print(
-            f"Presença\nPlenário: {plenary_presences}\nComissão: {commissions_presences}"
-        )
-
         return plenary_presences, commissions_presences
 
     def __extract_basic_info(self, xpath_id):
@@ -47,8 +43,6 @@ class DataExtractor:
         name = self.__extract_basic_info(name_xpath_id)
         birth_date = self.__extract_basic_info(birth_date_xpath_id)
 
-        print(f"Nome: {name} || Nasc.: {birth_date}")
-
         return name, birth_date
 
     def trips_data(self):
@@ -60,8 +54,6 @@ class DataExtractor:
 
         if trips_element:
             trips = int(trips_element)
-
-        print(f"viagens: {trips}")
 
         return trips
 
