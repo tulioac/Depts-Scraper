@@ -36,7 +36,7 @@ class QuotesSpider(scrapy.Spider):
 
         salary = data_extractor.get_salary()
 
-        yield {
+        dep_data = {
             "nome": name,
             "genero": "F",
             "data_nascimento": birth_date,
@@ -83,3 +83,5 @@ class QuotesSpider(scrapy.Spider):
             "gasto_dez_gab": cabinet_expenses.get("dez"),
             "salario_bruto": salary,
         }
+
+        yield dep_data

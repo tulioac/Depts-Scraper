@@ -4,7 +4,6 @@ https://www.camara.leg.br/deputados/74057
 https://www.camara.leg.br/deputados/204353
 https://www.camara.leg.br/deputados/204400
 https://www.camara.leg.br/deputados/73696
-https://www.camara.leg.br/deputados/123756
 https://www.camara.leg.br/deputados/204509
 https://www.camara.leg.br/deputados/73701
 https://www.camara.leg.br/deputados/204374
@@ -58,7 +57,6 @@ https://www.camara.leg.br/deputados/160641
 https://www.camara.leg.br/deputados/204467
 https://www.camara.leg.br/deputados/178925
 https://www.camara.leg.br/deputados/74075
-https://www.camara.leg.br/deputados/220008
 https://www.camara.leg.br/deputados/160575
 https://www.camara.leg.br/deputados/204407
 https://www.camara.leg.br/deputados/204354
