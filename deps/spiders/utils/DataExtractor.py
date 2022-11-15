@@ -19,7 +19,7 @@ class DataExtractor:
         except:
             return None
 
-    def get_presence_data(
+    def __get_presence_data(
         self,
     ):
         plenary_xpath_id, commission_xpath_id = [1, 2]
@@ -36,7 +36,7 @@ class DataExtractor:
 
         return info
 
-    def get_basic_data(self):
+    def __get_basic_data(self):
 
         name_xpath_id, birth_date_xpath_id = [1, 5]
 
@@ -45,7 +45,7 @@ class DataExtractor:
 
         return name, birth_date
 
-    def trips_data(self):
+    def __trips_data(self):
         xpath = '//*[@id="recursos-section"]/ul/li[5]/div/a/text()'
 
         trips_element = self.response.xpath(xpath).get()
@@ -77,21 +77,21 @@ class DataExtractor:
 
         return expenses_dict, total_expenses
 
-    def get_parliamentary_expenses(self):
+    def __get_parliamentary_expenses(self):
         expenses_dict, total_expenses = self.__expenses_accumulator(
             "table#gastomensalcotaparlamentar"
         )
 
         return expenses_dict, total_expenses
 
-    def get_cabinet_expenses(self):
+    def __get_cabinet_expenses(self):
         expenses_dict, total_expenses = self.__expenses_accumulator(
             "table#gastomensalverbagabinete"
         )
 
         return expenses_dict, total_expenses
 
-    def get_salary(self):
+    def __get_salary(self):
         salaryText = self.response.xpath(
             '//*[@id="recursos-section"]/ul/li[2]/div/a/text()'
         ).get()
@@ -99,3 +99,73 @@ class DataExtractor:
         salary = float(salaryText.split("\n")[1].replace(".", "").replace(",", "."))
 
         return salary
+
+    def run(self, gender):
+
+        name, birth_date = self.__get_basic_data()
+
+        plenary_presences, commissions_presences = self.__get_presence_data()
+
+        trips = self.__trips_data()
+
+        (
+            parliamentary_expenses,
+            total_parliamentary_expenses,
+        ) = self.__get_parliamentary_expenses()
+
+        (
+            cabinet_expenses,
+            total_cabinet_expenses,
+        ) = self.__get_cabinet_expenses()
+
+        salary = self.__get_salary()
+
+        dep_data = {
+            "nome": name,
+            "genero": gender,
+            "data_nascimento": birth_date,
+            "presença_plenario": plenary_presences[0] if plenary_presences else None,
+            "ausencia_plenario": plenary_presences[1] if plenary_presences else None,
+            "ausencia_justificada_plenario": plenary_presences[2]
+            if plenary_presences
+            else None,
+            "presenca_comissao": commissions_presences[0]
+            if commissions_presences
+            else None,
+            "ausencia_comissao": commissions_presences[1]
+            if commissions_presences
+            else None,
+            "ausencia_justificada_comissao": commissions_presences[2]
+            if commissions_presences
+            else None,
+            "quant_viagem": trips,
+            "gasto_total_par": total_parliamentary_expenses,
+            "gasto_jan_par": parliamentary_expenses.get("jan"),
+            "gasto_fev_par": parliamentary_expenses.get("fev"),
+            "gasto_mar_par": parliamentary_expenses.get("mar"),
+            "gasto_abr_par ": parliamentary_expenses.get("abr"),
+            "gasto_mai_par": parliamentary_expenses.get("mai"),
+            "gasto_jun_par": parliamentary_expenses.get("jun"),
+            "gasto_jul_par": parliamentary_expenses.get("jul"),
+            "gasto_ago_par": parliamentary_expenses.get("ago"),
+            "gasto_set_par": parliamentary_expenses.get("set"),
+            "gasto_out_par": parliamentary_expenses.get("out"),
+            "gasto_nov_par": parliamentary_expenses.get("nov"),
+            "gasto_dez_par": parliamentary_expenses.get("dez"),
+            "gasto_total_gab": total_cabinet_expenses,
+            "gasto_jan_gab": cabinet_expenses.get("jan"),
+            "gasto_fev_gab": cabinet_expenses.get("fev"),
+            "gasto_mar_gab": cabinet_expenses.get("mar"),
+            "gasto_abr_gab ": cabinet_expenses.get("abr"),
+            "gasto_mai_gab": cabinet_expenses.get("mai"),
+            "gasto_jun_gab": cabinet_expenses.get("jun"),
+            "gasto_jul_gab": cabinet_expenses.get("jul"),
+            "gasto_ago_gab": cabinet_expenses.get("ago"),
+            "gasto_set_gab": cabinet_expenses.get("set"),
+            "gasto_out_gab": cabinet_expenses.get("out"),
+            "gasto_nov_gab": cabinet_expenses.get("nov"),
+            "gasto_dez_gab": cabinet_expenses.get("dez"),
+            "salario_bruto": salary,
+        }
+
+        return dep_data
