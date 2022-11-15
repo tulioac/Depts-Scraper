@@ -39,3 +39,9 @@
 ## Viagens
 
 - Quantidade
+
+# Execução para CSV
+
+```sh
+scrapy crawl <spider> -o <nomearquivo>.csv -t csv
+```
